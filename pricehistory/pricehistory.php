@@ -29,6 +29,7 @@ class PriceHistory extends Module {
             || !$this->_installSql()
             || !$this->_installTab(0,'AdminPriceHistory', $this->l('Price History'))
             || !$this->_installTab('AdminPriceHistory','AdminPriceHistoryList', $this->l('List of prices'))
+            || !$this->registerHook('actionObjectProductUpdateBefore')
         ){
             return false;
         }
@@ -82,6 +83,30 @@ class PriceHistory extends Module {
         }
         return true;
 
+    }
+
+    public function hookActionObjectProductUpdateBefore()
+    {
+
+    }
+
+
+    public function getContent() {
+
+        if(Tools::isSubmit('submitParameters')) {
+            Configuration::updateValue('SEND_EMAIL',Tools::getValue('SEND_EMAIL'));
+            Configuration::updateValue('SEND_ADRESS',Tools::getValue('SEND_ADRESS'));
+        }
+
+
+        $this->context->smarty->assign([
+            'send_email' => Configuration::get('SEND_EMAIL'),
+            'send_address' => Configuration::get('SEND_ADRESS'),
+            'module_version' => $this->version,
+        ]);
+
+
+        return $this->display(__FILE__, 'views/templates/admin/configure.tpl');
     }
 
 }
