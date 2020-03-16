@@ -27,6 +27,8 @@ class PriceHistory extends Module {
 
         if (!parent::install()
             || !$this->_installSql()
+            || !$this->_installTab(0,'AdminPriceHistory', $this->l('Price History'))
+            || !$this->_installTab('AdminPriceHistory','AdminPriceHistoryList', $this->l('List of prices'))
         ){
             return false;
         }
@@ -35,11 +37,36 @@ class PriceHistory extends Module {
 
     public function uninstall() {
         if (!parent::uninstall()
-
+            || !$this->_uninstallTab('AdminPriceHistory')
+            || !$this->_uninstallTab('AdminPriceHistoryList')
         ){
             return false;
         }
         return true;
+    }
+
+
+    private function _installTab($parent, $class_name, $name) {
+        $tab = new Tab();
+        $tab->id_parent = (int)Tab::getIdFromClassName($parent);
+        $tab->class_name = $class_name;
+        $tab->module = $this->name;
+
+
+        $tab->name = [];
+        foreach(Language::getLanguages(true) as $lang) {
+            $tab->name[$lang['id_lang']] = $name;
+        }
+        return $tab->save();
+    }
+
+
+    private function _uninstallTab($class_name) {
+        $id_tab = Tab::getIdFromClassName($class_name);
+        $tab = new Tab((int)$id_tab);
+
+        return $tab->delete();
+
     }
 
 

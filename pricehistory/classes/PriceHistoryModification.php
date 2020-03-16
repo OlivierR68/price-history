@@ -39,21 +39,5 @@ class PriceHistoryModification extends ObjectModel
         parent::__construct($id, $id_lang);
     }
 
-    public static function getFirstModuleDisiis($firstname = null, $birthdate = null)
-    {
 
-        $query = new DbQuery();
-        $query->select('*');
-
-        if ($firstname != null) {
-            $query->where(' firstname LIKE \'' . $firstname . '\'');
-        }
-        $query->from('disii');
-
-
-        // On exécute la requête
-        $result = Db::getInstance()->executeS($query);
-
-        return $result;
-    }
 }
