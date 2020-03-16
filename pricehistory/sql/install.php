@@ -6,6 +6,7 @@ $sql_requests[] = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'price_history
 (
     `id_price_history` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `id_product` INT(10) UNSIGNED NOT NULL,
+    `product_name` VARCHAR(128),
     `old_price` DECIMAL(20,6) UNSIGNED NOT NULL DEFAULT 0.000000,
     `new_price` DECIMAL(20,6) UNSIGNED NOT NULL DEFAULT 0.000000,
     `id_employee` INT(10) UNSIGNED NOT NULL,

@@ -1,7 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__).'/classes/PriceHistoryModification.php');
 
-// sécurité de base
 if (!defined('_PS_VERSION_')){
     exit;
 }
