@@ -2,7 +2,7 @@
 
 $sql_requests = [];
 
-$sql_requests[] = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'_price_history 
+$sql_requests[] = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'price_history 
 (
     `id_price_history` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `id_product` INT(10) UNSIGNED NOT NULL,

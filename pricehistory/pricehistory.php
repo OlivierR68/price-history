@@ -1,48 +1,52 @@
 <?php
 
-if (!defined('_PS_VERSION_')) {
+
+// sécurité de base
+if (!defined('_PS_VERSION_')){
     exit;
 }
 
-class PriceHistory extends Module
-{
+class PriceHistory extends Module {
+
     public function __construct()
     {
         $this->name = 'pricehistory';
+        $this->displayName = $this->l('Prestashop Price History');
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
-        $this->author = 'webolive Studio';
-        $this->need_instance = 0;
-        $this->ps_versions_compliancy = [
-            'min' => '1.6',
-            'max' => _PS_VERSION_
-        ];
+        $this->author = 'webolive studio';
+        $this->description = $this->l('This is not working !');
+        $this->ps_versions_compliancy =['min' => '1.6', 'max' => _PS_VERSION_];
+        $this->confirmUninstall = $this->l('Are you sure ?');
         $this->bootstrap = true;
 
         parent::__construct();
-
-        $this->displayName = $this->l('Price History');
-        $this->description = $this->l('Track price of products, and alert admin by mail');
-
-        $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
-
     }
 
-    public function install()
-    {
-        return parent::install();
+    public function install() {
+
+        if (!parent::install()
+            || !$this->_installSql()
+        ){
+            return false;
+        }
+        return true;
     }
 
-    public function uninstall()
-    {
-        return parent::uninstall();
+    public function uninstall() {
+        if (!parent::uninstall()
+
+        ){
+            return false;
+        }
+        return true;
     }
+
 
     private function _installSql() {
 
-        include(dirname(__FILE__) . '/sql/install.php');
+        include(dirname(__FILE__).'/sql/install.php');
 
-        // On créé une variable $result à true
         $result = true;
         foreach($sql_requests as $request) {
             if (!empty($request)) {
