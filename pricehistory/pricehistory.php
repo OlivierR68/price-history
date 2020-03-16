@@ -37,4 +37,20 @@ class PriceHistory extends Module
     {
         return parent::uninstall();
     }
+
+    private function _installSql() {
+
+        include(dirname(__FILE__) . '/sql/install.php');
+
+        // On créé une variable $result à true
+        $result = true;
+        foreach($sql_requests as $request) {
+            if (!empty($request)) {
+                $result &= Db::getInstance()->execute($request);
+            }
+        }
+        return true;
+
+    }
+
 }
